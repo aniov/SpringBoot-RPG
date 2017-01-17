@@ -37,4 +37,8 @@ public class Villain {
     public int getLevel() {
         return level;
     }
+
+    public VillainType getVillainType() {
+        return villainType;
+    }
 }

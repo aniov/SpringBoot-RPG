@@ -19,15 +19,12 @@ public class ArtifactService {
 
     public void addArtifactToHero(Hero hero, Artifact artifact) {
         artifact.setHero(hero);
-        artifactRepository.save(artifact);
+        artifactRepository.saveAndFlush(artifact);
     }
 
     public void deleteArtifactFromHero(Long artifactID){
         artifactRepository.delete(artifactID);
-        System.out.println("\nIt should be deleted: " + artifactID);
         artifactRepository.flush();
-
-
     }
 
     public Artifact geBytArtifactType(ArtifactType artifactType){

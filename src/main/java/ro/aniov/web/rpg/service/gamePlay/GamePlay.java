@@ -50,6 +50,8 @@ public class GamePlay {
 
     private VillainType villainType;
 
+    private Villain villain;
+
     public void play(String control){
         this.control = control;
         initialize();
@@ -75,22 +77,20 @@ public class GamePlay {
             gameMap.setNextHeroPosition(newHeroPosition);
 
             if (isVillain()){
-
                 heroPlayDTO.setRunOrFight(true);
-                System.out.println("\nVillain:\n" + villainType);
+                heroPlayDTO.setVillainType(villainType.getName());
+                /** Generate new Villain conforming to the type*/
+                villain = new Villain(villainType, heroPlayDTO.getLevel());
+                heroPlayDTO.setVillain(villain);
                 return;
             }
-
             gameMap.setOnMap(newHeroPosition, GameMap.hero);
             gameMap.setOnMap(gameMap.getHeroPosition(), GameMap.passed);
             gameMap.setHeroPosition(newHeroPosition);
-
         }
         else {
             gameMap.setGameWin(true);
             heroService.setExperience(heroPlayDTO.getId(), heroPlayDTO.getExperience());
-
-            System.out.println("You won the game !!!");
         }
     }
 
@@ -105,7 +105,6 @@ public class GamePlay {
                 if (artifact != null){
                     artifactService.deleteArtifactFromHero(artifact.getId());
                 }
-
             }
             artifactSet.add(heroPlayDTO.getArtifact());
             heroPlayDTO.setArtifacts(artifactSet);
@@ -145,7 +144,7 @@ public class GamePlay {
             heroPlayDTO.setRunOrFight(false);
             heroPlayDTO.setExperience(heroPlayDTO.getExperience() + 20);
 
-            /** 50% chance to generate new Artifact*/
+            /** 50% chance to generate(drop) new Artifact*/
             Artifact artifact = generateNewArtifact();
             if (artifact == null){
                 heroPlayDTO.setMoveOk(true);
@@ -177,8 +176,7 @@ public class GamePlay {
 
     private boolean fightIsWon() {
 
-        Villain villain = new Villain(villainType, heroPlayDTO.getLevel());
-
+        villain = heroPlayDTO.getVillain();
         while (villain.getHealth() > 0 && heroPlayDTO.getHealth() > 0){
 
             villain.setHealth(villain.getHealth() - heroPlayDTO.getDamage());
@@ -189,7 +187,6 @@ public class GamePlay {
             return true;
         }
         else {
-            System.out.println("\nYou lost the Fight!!");
             return false;
         }
     }
@@ -216,6 +213,9 @@ public class GamePlay {
         else if (heroPlayDTO.isKeepOrDrop()) {
             for (HeroArtifactAction heroArtifactAction : HeroArtifactAction.values()) {
                 if (heroArtifactAction.name().equals(control)) {
+                    /** The fight is over, We set current villain to NULL*/
+                    villain = null;
+
                     heroArtifactAction();
                 }
             }

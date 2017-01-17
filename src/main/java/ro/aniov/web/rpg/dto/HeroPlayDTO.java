@@ -3,6 +3,7 @@
  */
 package ro.aniov.web.rpg.dto;
 
+import ro.aniov.web.rpg.model.characters.Villain.Villain;
 import ro.aniov.web.rpg.model.characters.hero.Hero;
 import ro.aniov.web.rpg.model.characters.hero.HeroType;
 import ro.aniov.web.rpg.model.characters.hero.artifact.Artifact;
@@ -21,7 +22,10 @@ public class HeroPlayDTO {
     private int damage;
     private int experience;
     private HeroType heroType;
+    private String villainType;
+    private int villainLevel;
     private Artifact artifact;
+    private Villain villain;
     private LinkedHashSet<Artifact> artifacts;
     private boolean isDead = false;
     private boolean keepOrDrop = false;
@@ -148,6 +152,22 @@ public class HeroPlayDTO {
         this.artifact = artifact;
     }
 
+    public String getVillainType() {
+        return villainType;
+    }
+
+    public int getVillainLevel() {
+        return villainLevel;
+    }
+
+    public void setVillainLevel(int villainLevel) {
+        this.villainLevel = villainLevel;
+    }
+
+    public void setVillainType(String villainType) {
+        this.villainType = villainType;
+    }
+
     public void setKeepOrDrop(boolean keepOrDrop) {
         this.keepOrDrop = keepOrDrop;
         if (this.keepOrDrop){
@@ -175,6 +195,14 @@ public class HeroPlayDTO {
         if (this.moveOk){
             runOrFight = keepOrDrop = false;
         }
+    }
+
+    public Villain getVillain() {
+        return villain;
+    }
+
+    public void setVillain(Villain villain) {
+        this.villain = villain;
     }
 
     public void setStats(){

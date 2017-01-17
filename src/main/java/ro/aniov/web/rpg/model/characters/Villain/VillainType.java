@@ -5,7 +5,7 @@ package ro.aniov.web.rpg.model.characters.Villain;
 
 public enum VillainType {
 
-    MURLOC(3, 4, "Murcloc"), ORC(5, 3, "Orc"), GOBLIN(4, 2, "Goblin"), GHOST(2, 5, "Ghost");
+    MURLOC(3, 4, "Murloc"), ORC(5, 3, "Orc"), GOBLIN(4, 2, "Goblin"), GHOST(2, 5, "Ghost");
 
     int health;
     int damage;
@@ -21,16 +21,8 @@ public enum VillainType {
         return health;
     }
 
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
     public int getDamage() {
         return damage;
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
     }
 
     public String getName() {

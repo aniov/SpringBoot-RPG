@@ -70,35 +70,30 @@
                 <div th:replace="buttons :: move_buttons"/>
             </div>
             <div th:if="${heroPlayDTO.isRunOrFight()} == true">
+                <div class="alert alert-dismissible alert-info">
+                    <p style="font-size: 30px; font-weight: bold; text-align: center">In front of you is a
+                        <p th:text="${heroPlayDTO.villain.villainType}" style="font-size: 35px; font-weight: bold; text-align: center; color: #ff14c3;">Warlock</p>
+                    </p>
+                    <p style="font-size: 20px; font-weight: bold; color: #b600ee; text-align: center">Do you dare fight him?</p>
+                </div>
                <div th:replace="buttons :: fight_run_buttons"/>
             </div>
 
             <div th:if="${heroPlayDTO.isKeepOrDrop()} == true">
-
                 <div class="alert alert-dismissible alert-success">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Well done!</strong> An item has been dropped by killing the <a href="#" class="alert-link"></a>.
+                    <p style="font-size: 30px; font-weight: bold; text-align: center">Well done!</p>
+                    <p style="font-size: 25px; font-weight: bold; text-align: center">The
+                        <span th:text="${heroPlayDTO.villain.villainType}" style="color: #272b30">monster</span> dropped his artifact:
+                        <span th:text="${heroPlayDTO.artifact.artifactType}" style="font-size: 30px; font-weight: bold; color: #ff14c3;">Ring</span>
+                        level: <span th:text="${heroPlayDTO.artifact.level}">4</span>
+                        (health: <span th:text="${heroPlayDTO.artifact.health}">4</span>
+                        , damage: <span th:text="${heroPlayDTO.artifact.damage}">7</span>
+                        )
+                    </p>
                 </div>
-
-
-
-
 
                 <div th:replace="buttons :: keep_drop_buttons"/>
             </div>
-
-           <!-- <div th:if="${heroPlayDTO.isKeepOrDrop()} == true">
-                <form role="form" th:action="@{/game_play}" th:object="${heroControlDTO}" th:method="PUT">
-                    <a>Villain drop this item <p th:text="${heroPlayDTO.artifact}">Axe lvl 4</p></a>
-                    <select th:field="*{response}" class="form-control">
-                        <option th:each="theAction : ${T(ro.aniov.web.rpg.dto.HeroArtifactAction).values()}"
-                                th:value="${theAction}" th:text="${theAction}" style="font-weight: bold">Some action
-                        </option>
-                    </select><br/>
-                    <button th:type="submit" class="btn btn-success">Submit</button>
-                </form>
-            </div>-->
-
 
         </div>
 
@@ -133,3 +128,15 @@
 
 </body>
 </html>
+
+<!-- <div th:if="${heroPlayDTO.isKeepOrDrop()} == true">
+               <form role="form" th:action="@{/game_play}" th:object="${heroControlDTO}" th:method="PUT">
+                   <a>Villain drop this item <p th:text="${heroPlayDTO.artifact}">Axe lvl 4</p></a>
+                   <select th:field="*{response}" class="form-control">
+                       <option th:each="theAction : ${T(ro.aniov.web.rpg.dto.HeroArtifactAction).values()}"
+                               th:value="${theAction}" th:text="${theAction}" style="font-weight: bold">Some action
+                       </option>
+                   </select><br/>
+                   <button th:type="submit" class="btn btn-success">Submit</button>
+               </form>
+           </div>-->

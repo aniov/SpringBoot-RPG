@@ -37,7 +37,7 @@ public class HeroService {
         /**  Transform from String to Enum type */
         HeroType heroType = HeroType.valueOf(heroDTO.getHeroType());
         Hero hero = new Hero(heroDTO.getName(), heroType, user);
-        heroRepository.save(hero);
+        heroRepository.saveAndFlush(hero);
     }
 
     public void deleteHero(Long id) {
@@ -47,22 +47,27 @@ public class HeroService {
 
     public void editName(Long id, String newname) {
         heroRepository.updateHeroName(id, newname);
+        heroRepository.flush();
     }
 
     public void setHealth(Long id, int health){
         heroRepository.updateHeroHealth(id, health);
+        heroRepository.flush();
     }
 
     public void setDamage(Long id, int damage){
         heroRepository.updateHeroDamage(id, damage);
+        heroRepository.flush();
     }
 
     public void setLevel(Long id, int level){
         heroRepository.updateHeroLevel(id, level);
+        heroRepository.flush();
     }
 
     public void setExperience(Long id, int experience){
         heroRepository.updateHeroExperience(id, experience);
+        heroRepository.flush();
     }
 
     public int getHeroLevel(Long id){
