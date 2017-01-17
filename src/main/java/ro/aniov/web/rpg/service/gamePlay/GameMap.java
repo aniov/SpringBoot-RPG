@@ -21,9 +21,9 @@ public class GameMap {
    // public static Set<Long> hId = new HashSet<>();
    // public static Set<GameMap> gameMapsInstances = new HashSet<>();
 
-    final private static String empty = "Empty";
-    final private static String hero = "Hero";
-    final private static String passed = "Passed";
+    final public static String empty = "Empty";
+    final public static String hero = "Hero";
+    final public static String passed = "Passed";
 
     public GameMap(int heroLevel, Long heroId) {
         this.level = heroLevel;
