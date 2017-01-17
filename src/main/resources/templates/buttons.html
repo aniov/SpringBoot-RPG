@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<div th:fragment="move_buttons">
+    <div style="text-align: center;">
+        <div>
+            <form th:object="${heroControlDTO}" th:method="PUT" th:action="@{/game_play}">
+                <input type="hidden" th:value="${T(ro.aniov.web.rpg.dto.HeroMoveType).UP.toString()}" name="response"/>
+                <button th:type="submit" class="btn btn-success btn-lg" style="width: 60px;">
+                    <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                </button>
+            </form>
+        </div>
+
+        <div class="btn-group" style="width: 50%;">
+            <div style="display: inline-block;">
+                <form th:object="${heroControlDTO}" th:method="PUT" th:action="@{/game_play}">
+                    <input type="hidden" th:value="${T(ro.aniov.web.rpg.dto.HeroMoveType).LEFT.toString()}" name="response"/>
+                    <button type="submit" class="btn btn-success btn-lg" style="width: 60px;">
+                        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    </button>
+                </form>
+            </div>
+
+            <div style="display: inline-block;">
+                <form th:object="${heroControlDTO}" th:method="PUT" th:action="@{/game_play}">
+                    <input type="hidden" th:value="${T(ro.aniov.web.rpg.dto.HeroMoveType).RIGHT.toString()}" name="response"/>
+                    <button type="submit" class="btn btn-success btn-lg" style="width: 60px;">
+                        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div>
+            <form th:object="${heroControlDTO}" th:method="PUT" th:action="@{/game_play}">
+                <input type="hidden" th:value="${T(ro.aniov.web.rpg.dto.HeroMoveType).DOWN.toString()}"
+                       name="response"/>
+                <button type="submit" class="btn btn-success btn-lg" style="width: 60px;">
+                    <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="fight_run_buttons">
+    <div style="display: inline-block; text-align: right;width: 50%;">
+        <form th:object="${heroControlDTO}" th:method="PUT" th:action="@{/game_play}">
+            <input type="hidden" th:value="${T(ro.aniov.web.rpg.dto.HeroActionType).FIGHT.toString()}" name="response"/>
+            <button th:type="submit" class="btn btn-danger btn-lg" style="padding: 20px 80px;font-size: 26px;">
+                <span class="" aria-hidden="true">Fight</span>
+            </button>
+        </form>
+    </div>
+    <div style="display: inline-block;text-align: left;">
+        <form th:object="${heroControlDTO}" th:method="PUT" th:action="@{/game_play}">
+            <input type="hidden" th:value="${T(ro.aniov.web.rpg.dto.HeroActionType).RUN.toString()}" name="response"/>
+            <button th:type="submit" class="btn btn-info btn-lg" style="padding: 20px 80px;font-size: 26px;">
+                <span class="" aria-hidden="true">Run</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<div th:fragment="keep_drop_buttons">
+    <div style="display: inline-block; text-align: right;width: 50%;">
+        <form th:object="${heroControlDTO}" th:method="PUT" th:action="@{/game_play}">
+            <input type="hidden" th:value="${T(ro.aniov.web.rpg.dto.HeroArtifactAction).KEEP.toString()}" name="response"/>
+            <button th:type="submit" class="btn btn-success btn-lg" style="padding: 20px 80px;font-size: 26px;">
+                <span class="" aria-hidden="true">Keep</span>
+            </button>
+        </form>
+    </div>
+    <div style="display: inline-block;text-align: left;">
+        <form th:object="${heroControlDTO}" th:method="PUT" th:action="@{/game_play}">
+            <input type="hidden" th:value="${T(ro.aniov.web.rpg.dto.HeroArtifactAction).DROP.toString()}" name="response"/>
+            <button th:type="submit" class="btn btn-warning btn-lg" style="padding: 20px 80px;font-size: 26px;">
+                <span class="" aria-hidden="true">Drop</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

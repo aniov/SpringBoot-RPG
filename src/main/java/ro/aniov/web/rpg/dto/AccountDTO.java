@@ -1,3 +1,6 @@
+/**
+ * Created by Marius on 12/9/2016.
+ */
 package ro.aniov.web.rpg.dto;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -8,8 +11,9 @@ import ro.aniov.web.rpg.dto.validators.MatchFields;
 import javax.validation.constraints.Size;
 
 /**
- * Created by Marius on 12/9/2016.
+ * A DTO representing an Account.
  */
+
 @MatchFields(first = "plainPassword", second = "repeatPlainPassword", message = "Passwords don't match")
 public class AccountDTO {
 
@@ -25,6 +29,16 @@ public class AccountDTO {
 
     @NotBlank(message = "")
     private String repeatPlainPassword;
+
+    public AccountDTO() {
+    }
+
+    //Testing purpose
+    public AccountDTO(String email, String plainPassword, String repeatPlainPassword) {
+        this.email = email;
+        this.plainPassword = plainPassword;
+        this.repeatPlainPassword = repeatPlainPassword;
+    }
 
     public String getEmail() {
         return email;

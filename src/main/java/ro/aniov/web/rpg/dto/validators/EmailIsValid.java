@@ -1,3 +1,6 @@
+/**
+ * Created by Marius on 12/10/2016.
+ */
 package ro.aniov.web.rpg.dto.validators;
 
 import javax.validation.Constraint;
@@ -10,8 +13,9 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Created by Marius on 12/10/2016.
+ * A email Validator interface
  */
+
 @Target(value = ElementType.FIELD)
 @Retention(RUNTIME)
 @Constraint(validatedBy = EmailIsValidValidator.class)

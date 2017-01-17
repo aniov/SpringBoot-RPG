@@ -52,7 +52,8 @@ public class Account {
 
     @NotNull
     @Column(name = "role")
-    private Role role = Role.ROLE_USER;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
@@ -66,6 +67,9 @@ public class Account {
     protected void onCreate(){
         if (created == null)
             created = new Date();
+    }
+
+    public Account() {
     }
 
     public Long getId() {

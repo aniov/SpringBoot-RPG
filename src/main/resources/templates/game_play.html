@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Play the Game</title>
+    <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
+    <link href="../static/css/sweetalert2.min.css" th:href="@{/css/sweetalert2.min.css}" rel="stylesheet"/>
+    <script type="text/javascript" src="../static/js/sweetalert2.min.js" th:src="@{/js/sweetalert2.min.js}"></script>
+    <script type="text/javascript" src="../static/js/inGameAlert.js" th:src="@{/js/inGameAlert.js}"></script>
+    <script type="text/javascript" src="../static/js/jquery-3.1.1.min.js" th:src="@{/js/jquery-3.1.1.min.js}"></script>
+    <script type="text/javascript" src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+
+</head>
+<body id="gamePlay">
+<div th:replace="navbar :: navigationbar"/>
+
+<div class="container">
+    <div class="col-lg-12">
+
+
+        <h1>Game Play</h1>
+        <table class="table table-striped table-hover ">
+            <thead>
+            <tr class="info">
+                <th>Name</th>
+                <th>Type</th>
+                <th>Level</th>
+                <th>Experience</th>
+                <th style="font-size: x-small">Base Health</th>
+                <th style="font-size: x-small">Base Damage</th>
+                <th>Total Health</th>
+                <th>Total Damage</th>
+                <th>Inventory <p style="font-size: xx-small">(maximum of 6 items)</p></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${heroPlayDTO.name}">My Hero</td>
+                <td th:text="${heroPlayDTO.heroType}">Paladin</td>
+                <td th:text="${heroPlayDTO.level}">4</td>
+                <td>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-success"
+                             th:style="'width: ' + ${heroPlayDTO.experience} + '%'">
+                            <p th:text="${heroPlayDTO.experience} + '%'"
+                               style="color: #b600ee; font-family: 'Arial Black'">35%</p>
+                        </div>
+                    </div>
+                </td>
+                <td th:text="${heroPlayDTO.baseHealth}" style="font-size: x-small; color: #3fc3ee">1400</td>
+                <td th:text="${heroPlayDTO.baseDamage}" style="font-size: x-small; color: #3fc3ee">1500</td>
+                <td th:text="${heroPlayDTO.health}" style="font-family: 'Arial Black'; color: springgreen">2400</td>
+                <td th:text="${heroPlayDTO.damage}" style="font-family: 'Arial Black'; color: royalblue">3500</td>
+                <td class="warning">
+                    <ul th:each="artifact : ${heroPlayDTO.artifacts}" style="list-style-type: circle">
+                        <li th:text="${artifact.artifactType.name} + ' lvl ' +
+                                ${artifact.level} + ' (health +' +
+                                ${artifact.health} +', damage +' +
+                                ${artifact.damage} + ')'" style="font-size: smaller">Sword lvl 3 (health +345, damage
+                            +567)
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div th:if="${heroPlayDTO.isDead()} == false">
+            <div th:if="${heroPlayDTO.isMoveOk()} == true">
+                <div th:replace="buttons :: move_buttons"/>
+            </div>
+            <div th:if="${heroPlayDTO.isRunOrFight()} == true">
+               <div th:replace="buttons :: fight_run_buttons"/>
+            </div>
+
+            <div th:if="${heroPlayDTO.isKeepOrDrop()} == true">
+
+                <div class="alert alert-dismissible alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Well done!</strong> An item has been dropped by killing the <a href="#" class="alert-link"></a>.
+                </div>
+
+
+
+
+
+                <div th:replace="buttons :: keep_drop_buttons"/>
+            </div>
+
+           <!-- <div th:if="${heroPlayDTO.isKeepOrDrop()} == true">
+                <form role="form" th:action="@{/game_play}" th:object="${heroControlDTO}" th:method="PUT">
+                    <a>Villain drop this item <p th:text="${heroPlayDTO.artifact}">Axe lvl 4</p></a>
+                    <select th:field="*{response}" class="form-control">
+                        <option th:each="theAction : ${T(ro.aniov.web.rpg.dto.HeroArtifactAction).values()}"
+                                th:value="${theAction}" th:text="${theAction}" style="font-weight: bold">Some action
+                        </option>
+                    </select><br/>
+                    <button th:type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>-->
+
+
+        </div>
+
+        <div th:if="${heroPlayDTO.isDead()} == true">
+            <script>heroDiedAlert();</script>
+        </div>
+
+        <table class="table">
+            <tr th:each="i: ${gameMap.theMap}">
+                <p th:each="j: ${i}">
+                <td th:text="${j}">Dummy</td>
+                </p>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div th:replace="footer::footerbar"/>
+
+<div th:if="${heroPlayDTO.isLevelUP()} == true">
+    <script th:inline="javascript">
+        var level = [[${heroPlayDTO.level}]];
+        levelUpAlert(level);
+    </script>
+</div>
+
+<div th:if="${gameMap.isGameWin()} == true">
+    <script th:inline="javascript">
+        gameWonAlert();
+    </script>
+</div>
+
+</body>
+</html>

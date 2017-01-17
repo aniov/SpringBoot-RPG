@@ -29,17 +29,13 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public String receiveRegisterForm(Model model, @ModelAttribute(value = "accountDTO") @Valid AccountDTO accountDTO, BindingResult bindingResult){
+    public String createNewAccount(@ModelAttribute(value = "accountDTO") @Valid AccountDTO accountDTO, BindingResult bindingResult){
 
-        if (bindingResult.hasErrors()){
-            return "register";
-        }
-        if (accountService.findAccountByEmail(accountDTO.getEmail()) != null){
-            model.addAttribute("There is an account with that email adress: " +  accountDTO.getEmail());
+        if (bindingResult.hasErrors() || accountService.findAccountByEmail(accountDTO.getEmail()) != null){
             return "register";
         }
         accountService.registerAccount(accountDTO);
-        return "redirect:/";
+        return "redirect:/login";
 
     }
 }

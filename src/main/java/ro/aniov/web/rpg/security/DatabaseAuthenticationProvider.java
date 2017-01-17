@@ -8,7 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,6 @@ import org.springframework.util.StringUtils;
 import ro.aniov.web.rpg.model.Account;
 import ro.aniov.web.rpg.service.AccountService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -68,8 +67,9 @@ public class DatabaseAuthenticationProvider extends AbstractUserDetailsAuthentic
         if (!valid){
             throw new BadCredentialsException("Invalid Account name / Password for user: " + email);
         }
+        //Addinng Account role to authorities
+        final List<GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(account.getRole().getRole());
 
-        final List<GrantedAuthority> authorities = new ArrayList<>();
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(email, plainPassword,
                 account.isEnabled(), account.isAccountNonExpired(), account.isCredentialsNonExpired(), account.isAccountNonLocked(), authorities);
 

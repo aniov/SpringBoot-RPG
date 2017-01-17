@@ -7,7 +7,6 @@
 <body>
 
 <div th:fragment="navigationbar">
-
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -19,11 +18,20 @@
                 </button>
                 <a class="navbar-brand" href="/">Rpg Game</a>
             </div>
-
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                    <li><a th:href="@{/register}">Register</a></li>
+                    <li class="active"><a href="http://www.google.com">
+                        <img src="../static/png/google_icon.png" th:src="@{/png/google_icon.png}"/><span class="sr-only">(current)</span></a>
+                    </li>
+                    <div class="nav navbar-nav navbar-left" sec:authorize="hasRole('ROLE_USER')">
+                        <li><a th:href="@{/member}">Member</a></li>
+                    </div>
+                    <div class="nav navbar-nav navbar-left" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <li><a th:href="@{/admin}">Admin</a></li>
+                    </div>
+                    <div class="nav navbar-nav navbar-right" sec:authorize="!isAuthenticated()">
+                        <li><a th:href="@{/register}">Register</a></li>
+                    </div>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
@@ -52,8 +60,6 @@
             </div>
         </div>
     </nav>
-
 </div>
-
 </body>
 </html>

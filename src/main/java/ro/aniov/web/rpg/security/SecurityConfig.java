@@ -38,11 +38,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // @formatter:off
         web.ignoring()
-                .antMatchers("/js/**",
-                            "/css/**",
-                            "/*.css",
-                            "/*.png",
-                            "/*.gif");
+                .antMatchers("/js/*",
+                                        "/css/*",
+                                        "/png/*",
+                                        "/app/*",
+                                        "/fonts/*"
+                            );
         // @formatter:on
 
     }
@@ -55,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
            .formLogin()
                 .loginPage("/login")
                     .failureUrl("/login?error=true")
-                    .defaultSuccessUrl("/")
+                    .defaultSuccessUrl("/member")
            .and()
                 .logout()
                     .logoutSuccessUrl("/login")
@@ -67,9 +68,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
            .and()
                 .authorizeRequests()
-                    .antMatchers("/members",
+                    .antMatchers("/member",
                                             "/profile",
+                                            "/delete_hero/*",
+                                            "/edit_heroname",
+                                            "/game_play",
                                             "/editname",
+                                            "/new_hero",
+                                            "/ini_game",
                                             "/logout")
                     .authenticated()
                     .antMatchers("/admin")

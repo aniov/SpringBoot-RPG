@@ -1,3 +1,6 @@
+/**
+ * Created by Marius on 12/10/2016.
+ */
 package ro.aniov.web.rpg.dto.validators;
 
 import javax.validation.ConstraintValidator;
@@ -6,11 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by Marius on 12/10/2016.
- */
-
-/**
- * Create a Validator for email String field using regex sintax
+ * Create a Validator for email String field using regex syntax
  */
 public class EmailIsValidValidator implements ConstraintValidator<EmailIsValid, String>{
 

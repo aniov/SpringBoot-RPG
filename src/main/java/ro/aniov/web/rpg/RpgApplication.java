@@ -8,5 +8,6 @@ public class RpgApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(RpgApplication.class, args);
+
 	}
 }
