@@ -21,8 +21,6 @@ import java.awt.*;
 import java.util.LinkedHashSet;
 import java.util.Random;
 
-
-
 /**
  * A Service for Game Play
  * Where all the magic action happens
@@ -62,6 +60,8 @@ public class GamePlay {
     private void initialize(){
         gameMap = (GameMap) httpSession.getAttribute("gameMap");
         heroPlayDTO = (HeroPlayDTO) httpSession.getAttribute("heroPlayDTO");
+        heroPlayDTO.setRunFailed(false);
+        heroPlayDTO.setFightIsWon(false);
     }
 
     private void heroMove(){
@@ -126,6 +126,7 @@ public class GamePlay {
             Random random = new Random();
             if (random.nextBoolean()){
                 fight();
+                heroPlayDTO.setRunFailed(true);
             }
             else {
                 heroPlayDTO.setMoveOk(true);
@@ -142,6 +143,7 @@ public class GamePlay {
             gameMap.setHeroPosition(gameMap.getNextHeroPosition());
 
             heroPlayDTO.setRunOrFight(false);
+            heroPlayDTO.setFightIsWon(true);
             heroPlayDTO.setExperience(heroPlayDTO.getExperience() + 20);
 
             /** 50% chance to generate(drop) new Artifact*/
@@ -171,7 +173,12 @@ public class GamePlay {
     }
 
     private Artifact generateNewArtifact() {
-            return new Artifact(heroPlayDTO.getLevel());
+            Random random = new Random();
+
+            if (random.nextBoolean()) {
+                return new Artifact(heroPlayDTO.getLevel());
+            }
+            return null;
     }
 
     private boolean fightIsWon() {
@@ -241,6 +248,5 @@ public class GamePlay {
         }
         return false;
     }
-
 
 }

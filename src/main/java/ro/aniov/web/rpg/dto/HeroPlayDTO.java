@@ -15,11 +15,13 @@ public class HeroPlayDTO {
     private Long id;
     private String name;
     private int level;
-    private boolean levelUP = false;
+
     private int baseHealth;
     private int baseDamage;
     private int health;
     private int damage;
+    private int totalHealth;
+    private int totalDamage;
     private int experience;
     private HeroType heroType;
     private String villainType;
@@ -27,10 +29,13 @@ public class HeroPlayDTO {
     private Artifact artifact;
     private Villain villain;
     private LinkedHashSet<Artifact> artifacts;
+    private boolean levelUP = false;
     private boolean isDead = false;
     private boolean keepOrDrop = false;
     private boolean runOrFight = false;
     private boolean moveOk = true;
+    private boolean runFailed = false;
+    private boolean fightIsWon = false;
 
     public HeroPlayDTO(Hero hero) {
         this.id = hero.getId();
@@ -168,6 +173,30 @@ public class HeroPlayDTO {
         this.villainType = villainType;
     }
 
+    public int getTotalHealth() {
+        return totalHealth;
+    }
+
+    public void setTotalHealth(int totalHealth) {
+        this.totalHealth = totalHealth;
+    }
+
+    public int getTotalDamage() {
+        return totalDamage;
+    }
+
+    public void setTotalDamage(int totalDamage) {
+        this.totalDamage = totalDamage;
+    }
+
+    public boolean isFightIsWon() {
+        return fightIsWon;
+    }
+
+    public void setFightIsWon(boolean fightIsWon) {
+        this.fightIsWon = fightIsWon;
+    }
+
     public void setKeepOrDrop(boolean keepOrDrop) {
         this.keepOrDrop = keepOrDrop;
         if (this.keepOrDrop){
@@ -205,6 +234,14 @@ public class HeroPlayDTO {
         this.villain = villain;
     }
 
+    public boolean isRunFailed() {
+        return runFailed;
+    }
+
+    public void setRunFailed(boolean runFailed) {
+        this.runFailed = runFailed;
+    }
+
     public void setStats(){
         health = baseHealth;
         damage = baseDamage;
@@ -214,11 +251,25 @@ public class HeroPlayDTO {
                 damage += artifact.getDamage();
             }
         }
+        totalHealth = health;
+        totalDamage = damage;
+    }
+
+    public void setTotalStats(){
+        totalHealth = baseHealth;
+        totalDamage = baseDamage;
+        if (artifacts != null){
+            for (Artifact artifact : artifacts) {
+                totalHealth += artifact.getHealth();
+                totalDamage += artifact.getDamage();
+            }
+        }
     }
 
     public void setStatsForHeroNewArtifact(){
         health += artifact.getHealth();
         damage += artifact.getDamage();
+        setTotalStats();
     }
 
     @Override

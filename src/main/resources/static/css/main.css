@@ -1,0 +1,51 @@
+.game-hname {
+    font-family: 'Arial Black';
+    text-align: center;
+    color: #3fc3ee;
+}
+
+.game-htype {
+    font-family: 'Arial Black';
+    font-weight: bold;
+    text-align: center;
+    color: #df8505;
+
+}
+
+.game-hlevel {
+    font-family: 'Arial Black';
+    text-align: center;
+    color: springgreen;
+}
+
+.game-health {
+    font-family: 'Arial Black';
+    color: #df8505;
+}
+
+.game-total-health {
+    font-family: 'Arial Black';
+    color: springgreen;
+}
+
+.game-damage {
+    text-align: center;
+    font-family: 'Arial Black';
+    color: royalblue;
+}
+
+.game-base-stats {
+    text-align: center;
+    font-size: x-small;
+    color: #3fc3ee
+}
+
+.game-experience {
+    color: #b600ee;
+    font-family: 'Arial Black';
+    text-align: center;
+}
+
+.game-font-small {
+    font-size: x-small;
+}

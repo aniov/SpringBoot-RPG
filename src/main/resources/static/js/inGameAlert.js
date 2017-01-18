@@ -13,7 +13,6 @@ function heroDiedAlert() {
     }).then(function () {
         window.location.replace("/member");
     });
-
 }
 
 function levelUpAlert(level) {
@@ -24,7 +23,6 @@ function levelUpAlert(level) {
         type: 'success',
         allowOutsideClick: false
     })
-
 }
 
 function gameWonAlert() {
@@ -38,5 +36,35 @@ function gameWonAlert() {
     }).then(function () {
         window.location.replace("/member");
     });
+}
 
+function heroRunFailed(won, levelUp, level) {
+
+    swal({
+        title: 'Seems you are Not So lucky',
+        text: 'You have to fight...Ha ha ha...',
+        type: 'warning',
+        allowOutsideClick: false
+    }).then (function (){
+        if (won){
+            heroWonFight(levelUp, level);
+        }
+        else {
+            heroDiedAlert();
+        }
+    });
+}
+
+function heroWonFight(levelUp, level) {
+
+    swal({
+        title: 'You won the fight',
+        text: 'those moves you made...impressive',
+        type: 'success',
+        allowOutsideClick: false
+    }).then (function (){
+        if (levelUp){
+            levelUpAlert(level);
+        }
+    });
 }
