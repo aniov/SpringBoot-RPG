@@ -59,7 +59,7 @@ public class AccountControllerTest {
 
         Account account = accountService.findAccountByEmail(email);
 
-        assertEquals("Account should exists: ", account.getEmail(), email);
+        assertEquals("Account should exist: ", account.getEmail(), email);
         assertTrue("Passwords should match: ", new BCryptPasswordEncoder().matches(password, account.getPasswordHash()));
         assertTrue(account.isEnabled());
         assertTrue(account.isAccountNonExpired());
@@ -94,7 +94,7 @@ public class AccountControllerTest {
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection());
 
-        //Create new account with same email
+        /**Create new account with same email */
         mockMvc.perform(post("/register")
                 .param("email", email)
                 .param("plainPassword", "newAccountpass")

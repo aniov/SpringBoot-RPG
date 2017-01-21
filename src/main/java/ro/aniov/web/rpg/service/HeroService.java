@@ -87,4 +87,8 @@ public class HeroService {
 
         return  hero != null && user.getId() == hero.getUser().getId();
     }
+
+    public void saveHero(Hero hero) {
+        heroRepository.saveAndFlush(hero);
+    }
 }

@@ -18,20 +18,16 @@ public class GameMap {
     private Long heroId;
     private boolean gameWin;
 
-   // public static Set<Long> hId = new HashSet<>();
-   // public static Set<GameMap> gameMapsInstances = new HashSet<>();
-
     final public static String empty = "Empty";
     final public static String hero = "Hero";
     final public static String passed = "Passed";
+    final public static String deadVillain = "deadVillain";
+    final public static String heroAndVillain = "heroAndVillain";
 
     public GameMap(int heroLevel, Long heroId) {
         this.level = heroLevel;
         this.heroId = heroId;
         generateMap();
-
-     //   hId.add(heroId);
-     //   gameMapsInstances.add(this);
     }
 
     private void generateMap(){
@@ -57,8 +53,8 @@ public class GameMap {
     private void putVillainsOnMap(){
         Random random = new Random();
 
-        int nrOfVillains = random.nextInt(size / 2);
-        nrOfVillains += size;
+        int nrOfVillains = random.nextInt(4) + size;
+        nrOfVillains = (size * size) - nrOfVillains;
 
         /** Create a Point with X, Y coordinates*/
         Point point = new Point();

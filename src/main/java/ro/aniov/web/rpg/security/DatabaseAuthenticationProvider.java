@@ -45,7 +45,7 @@ public class DatabaseAuthenticationProvider extends AbstractUserDetailsAuthentic
 
         final String plainPassword = usernamePasswordAuthenticationToken.getCredentials().toString();
 
-        // Check if the "plainPassowrd" String is null || contain only white spaces
+        /** Check if the "plainPassowrd" String is null || contain only white spaces */
         if (!StringUtils.hasText(plainPassword)) {
             this.logger.warn("AccountName {}: no password provided", email);
             valid = false;
@@ -67,7 +67,7 @@ public class DatabaseAuthenticationProvider extends AbstractUserDetailsAuthentic
         if (!valid){
             throw new BadCredentialsException("Invalid Account name / Password for user: " + email);
         }
-        //Addinng Account role to authorities
+        /** Addinng Account role to authorities */
         final List<GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(account.getRole().getRole());
 
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(email, plainPassword,

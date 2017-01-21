@@ -37,24 +37,16 @@ public class GamePlay {
 
     @Autowired
     private ArtifactService artifactService;
-
     private String control;
-
     private GameMap gameMap;
-
     private HeroPlayDTO heroPlayDTO;
-
     private Point newHeroPosition;
-
     private VillainType villainType;
-
     private Villain villain;
-
     public void play(String control){
         this.control = control;
         initialize();
         checkControl();
-
     }
 
     private void initialize(){
@@ -84,8 +76,20 @@ public class GamePlay {
                 heroPlayDTO.setVillain(villain);
                 return;
             }
-            gameMap.setOnMap(newHeroPosition, GameMap.hero);
-            gameMap.setOnMap(gameMap.getHeroPosition(), GameMap.passed);
+            /** Set the leaving position of the hero*/
+            if (gameMap.getFromMap(gameMap.getHeroPosition()).equals(GameMap.heroAndVillain)){
+                gameMap.setOnMap(gameMap.getHeroPosition(), GameMap.deadVillain);
+            }
+            else {
+                gameMap.setOnMap(gameMap.getHeroPosition(), GameMap.passed);
+            }
+            /** Set the next position of the hero*/
+            if (gameMap.getFromMap(gameMap.getNextHeroPosition()).equals(GameMap.deadVillain)){
+                gameMap.setOnMap(newHeroPosition, GameMap.heroAndVillain);
+            }
+            else {
+                gameMap.setOnMap(newHeroPosition, GameMap.hero);
+            }
             gameMap.setHeroPosition(newHeroPosition);
         }
         else {
@@ -137,9 +141,14 @@ public class GamePlay {
     private void fight(){
 
         if (fightIsWon()) {
-
-            gameMap.setOnMap(gameMap.getHeroPosition(), GameMap.passed);
-            gameMap.setOnMap(gameMap.getNextHeroPosition(), GameMap.hero);
+            /** Set the current position of the hero*/
+            if (gameMap.getFromMap(gameMap.getHeroPosition()).equals(GameMap.heroAndVillain)){
+                gameMap.setOnMap(gameMap.getHeroPosition(), GameMap.deadVillain);
+            }
+            else {
+                gameMap.setOnMap(gameMap.getHeroPosition(), GameMap.passed);
+            }
+            gameMap.setOnMap(gameMap.getNextHeroPosition(), GameMap.heroAndVillain);
             gameMap.setHeroPosition(gameMap.getNextHeroPosition());
 
             heroPlayDTO.setRunOrFight(false);

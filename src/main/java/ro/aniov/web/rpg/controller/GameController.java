@@ -115,8 +115,6 @@ public class GameController {
 
         /** Creating a new GameMap every time he enter's GamePlay mode*/
         gameMap = new GameMap(level, heroIdDTO.getHeroId());
-
-
     }
 
 }

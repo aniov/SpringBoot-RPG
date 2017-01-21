@@ -18,23 +18,21 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @GeneratedValue
     private Long id;
 
     @Column(name = "firstname")
     @Size(min = 3, max = 30)
-    private String firstName;
+    private String firstName = "not set";
 
     @Size(min = 3, max = 30)
     @Column(name = "lastname")
-    private String lastName;
+    private String lastName = "not set";
 
-    @OneToOne(targetEntity = Account.class, fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_id", nullable = false)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Account account;
 
-    @OneToMany(targetEntity = Hero.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Hero> heroes;
 
     public User() {

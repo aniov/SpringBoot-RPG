@@ -4,10 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import ro.aniov.web.rpg.model.Account;
 import ro.aniov.web.rpg.model.User;
 import ro.aniov.web.rpg.repository.HeroRepository;
 import ro.aniov.web.rpg.repository.UserRepository;
+
+import java.util.List;
 
 
 /**
@@ -29,15 +30,16 @@ public class UserService {
         return userRepository.findByAccountEmail(email);
     }
 
-    public void createNewBlankUser(Account account){
-
-        User user = new User("firstName", "lastName");
-        user.setAccount(account);
-        userRepository.save(user);
-    }
-
     public User findUserById(Long id){
         return userRepository.findById(id);
     }
 
+    public List<User> findAll() {
+
+        return userRepository.findAll();
+    }
+
+    public void saveUser(User user) {
+        userRepository.saveAndFlush(user);
+    }
 }

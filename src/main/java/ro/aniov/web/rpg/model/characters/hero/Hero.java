@@ -47,7 +47,7 @@ public class Hero {
     @Enumerated(EnumType.STRING)
     private HeroType heroType;
 
-    @OneToMany(targetEntity = Artifact.class, fetch = FetchType.EAGER, mappedBy = "hero", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "hero", cascade = CascadeType.ALL)
     private Set<Artifact> artifacts;
 
     @Temporal(TemporalType.TIMESTAMP)

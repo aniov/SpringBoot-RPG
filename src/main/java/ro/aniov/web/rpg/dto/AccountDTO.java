@@ -33,7 +33,7 @@ public class AccountDTO {
     public AccountDTO() {
     }
 
-    //Testing purpose
+    /** Testing purpose */
     public AccountDTO(String email, String plainPassword, String repeatPlainPassword) {
         this.email = email;
         this.plainPassword = plainPassword;

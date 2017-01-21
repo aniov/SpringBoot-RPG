@@ -9,8 +9,8 @@ package ro.aniov.web.rpg.model.characters.hero.artifact;
 
 public enum ArtifactType {
 
-    SWORD(7, 5, "Sword"), AXE(1, 6, "Axe"), BOW(2, 5, "Bow"), HELMET(6, 1, "Helmet"),
-    STAFF(4, 5, "Staff"), RING(3, 3, "Ring"), NECKLACE(2, 4, "Necklace"), SHIELD(9, 1, "Shield");
+    SWORD(2, 1, "Sword"), AXE(1, 2, "Axe"), BOW(2, 1, "Bow"), HELMET(3, 1, "Helmet"),
+    STAFF(3, 2, "Staff"), RING(2, 1, "Ring"), NECKLACE(1, 3, "Necklace"), SHIELD(4, 1, "Shield");
 
     private int health;
     private int damage;

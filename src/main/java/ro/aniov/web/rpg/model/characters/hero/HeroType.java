@@ -5,13 +5,12 @@ package ro.aniov.web.rpg.model.characters.hero;
  */
 public enum HeroType {
 
-    HUNTER(10, 6), MAGE(8, 7), PALADIN(12, 5), WARLOCK(8, 8), PRIEST(9, 6);
+    HUNTER(8, 4), MAGE(6, 5), PALADIN(10, 3), WARLOCK(6, 6), PRIEST(7, 4);
 
     private int health;
     private int damage;
 
     HeroType(int health, int damage) {
-
         this.health = health;
         this.damage = damage;
     }

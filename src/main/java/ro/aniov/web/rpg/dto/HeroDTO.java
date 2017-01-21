@@ -25,6 +25,12 @@ public class HeroDTO {
     public HeroDTO() {
     }
 
+    /** Testing purpose*/
+    public HeroDTO(String name, String heroType) {
+        this.name = name;
+        this.heroType = heroType;
+    }
+
     public String getName() {
         return name;
     }

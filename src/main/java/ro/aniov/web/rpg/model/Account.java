@@ -1,5 +1,7 @@
 package ro.aniov.web.rpg.model;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -21,7 +23,8 @@ import java.util.Date;
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "myGenerator")
+    @GenericGenerator(name="myGenerator", strategy="foreign", parameters=@Parameter(name = "property", value = "user"))
     @Column(name="id")
     private Long id;
 
@@ -60,7 +63,8 @@ public class Account {
     @DateTimeFormat(pattern="yyyy/MM/dd hh:mm:ss")
     private Date created;
 
-    @OneToOne(mappedBy = "account")
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private User user;
 
     @PrePersist

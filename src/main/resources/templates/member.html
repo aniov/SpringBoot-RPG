@@ -5,6 +5,7 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Member's page</title>
+    <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet"/>
     <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
     <link href="../static/css/sweetalert2.min.css" th:href="@{/css/sweetalert2.min.css}" rel="stylesheet"/>
     <script type="text/javascript" src="../static/js/jquery-3.1.1.min.js" th:src="@{/js/jquery-3.1.1.min.js}"
@@ -60,8 +61,8 @@
                                 </div>
                             </td>
                             <td>
-                                <ul th:each="artifact : ${hero.artifacts}" style="list-style-type: circle">
-                                    <li th:text="${artifact.artifactType.name} + ' lvl ' + ${artifact.level}" style="font-size: small">Artifact
+                                <ul th:each="artifact : ${hero.artifacts}" class="game-inventory">
+                                    <li th:text="${artifact.artifactType.name} + ' lvl ' + ${artifact.level}" style="font-size: smaller">Artifact
                                         lvl 1
                                     </li>
                                 </ul>

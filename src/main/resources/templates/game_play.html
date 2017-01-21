@@ -55,11 +55,11 @@
                 </td>
                 <td th:text="${heroPlayDTO.damage}" class="game-damage">3500</td>
                 <td class="warning">
-                    <ul th:each="artifact : ${heroPlayDTO.artifacts}" style="list-style-type: circle">
+                    <ul th:each="artifact : ${heroPlayDTO.artifacts}" class="game-inventory">
                         <li th:text="${artifact.artifactType.name} + ' lvl ' +
                                 ${artifact.level} + ' (health +' +
                                 ${artifact.health} +', damage +' +
-                                ${artifact.damage} + ')'" style="font-size: smaller">Sword lvl 3 (health +345, damage
+                                ${artifact.damage} + ')'" style="font-size: smaller;">Sword lvl 3 (health +345, damage
                             +567)
                         </li>
                     </ul>
@@ -119,10 +119,37 @@
             </script>
         </div>
 
-        <table class="table">
+        <table class="game-map">
             <tr th:each="i: ${gameMap.theMap}">
-                <p th:each="j: ${i}">
-                <td th:text="${j}">Dummy</td>
+                <p th:each="j: ${i}" th:switch="${j}">
+
+                    <a th:case="'Empty'">
+                        <td><img src="pics/fog.png" class="map-element"/></td>
+                    </a>
+                    <a th:case="'Hero'">
+                        <td><img src="pics/hero.gif" class="map-element"/></td>
+                    </a>
+                    <a th:case="${T(ro.aniov.web.rpg.model.characters.Villain.VillainType).GOBLIN.toString()}">
+                        <td><img src="pics/fog.png" class="map-element"/></td>
+                    </a>
+                    <a th:case="${T(ro.aniov.web.rpg.model.characters.Villain.VillainType).GHOST.toString()}">
+                        <td><img src="pics/fog.png" class="map-element"/></td>
+                    </a>
+                    <a th:case="${T(ro.aniov.web.rpg.model.characters.Villain.VillainType).MURLOC.toString()}">
+                        <td><img src="pics/fog.png" class="map-element"/></td>
+                    </a>
+                    <a th:case="${T(ro.aniov.web.rpg.model.characters.Villain.VillainType).ORC.toString()}">
+                        <td><img src="pics/fog.png" class="map-element"/></td>
+                    </a>
+                    <a th:case="'Passed'">
+                        <td><img src="pics/passed.png" class="map-element"/></td>
+                    </a>
+                    <a th:case="${T(ro.aniov.web.rpg.service.gamePlay.GameMap).deadVillain}">
+                        <td><img src="pics/dead-villain.png" class="map-element"/></td>
+                    </a>
+                    <a th:case="${T(ro.aniov.web.rpg.service.gamePlay.GameMap).heroAndVillain}">
+                        <td><img src="pics/hero-villain.gif" class="map-element"/></td>
+                    </a>
                 </p>
             </tr>
         </table>
