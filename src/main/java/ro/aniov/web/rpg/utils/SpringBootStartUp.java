@@ -32,9 +32,7 @@ public class SpringBootStartUp implements ApplicationListener<ApplicationReadyEv
 
     private void createInitialDataBaseUser(String email, String password, Role role){
 
-        if (accountRepository.findByRole(Role.ROLE_USER) == null) {
-
-            System.out.println("\n\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+        if (accountRepository.findByRole(role).isEmpty()) {
 
             Account account = new Account();
             account.setEmail(email);
