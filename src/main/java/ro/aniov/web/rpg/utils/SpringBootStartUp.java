@@ -26,8 +26,8 @@ public class SpringBootStartUp implements ApplicationListener<ApplicationReadyEv
 
     @Override
     public void onApplicationEvent(final ApplicationReadyEvent event) {
-       // createInitialAdmin();
-       // createInitialUser();
+        createInitialAdmin();
+        createInitialUser();
     }
 
     private void createInitialDataBaseUser(String email, String password, Role role){
