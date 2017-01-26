@@ -2,6 +2,7 @@ package ro.aniov.web.rpg.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,11 +38,9 @@ public class MemberController {
     @GetMapping(value = "/search")
     public String searchUsers(@RequestParam(name = "userName") String userName,
                               @RequestParam(name = "p", defaultValue = "1") int pageNr,
-                              @RequestParam(name = "r", defaultValue = "10") int results_p_page, Model model){
+                              @RequestParam(name = "r", defaultValue = "10") int results_p_page, Model model, Authentication authentication){
 
         Page<User> users = userService.findUserByName(userName, pageNr, results_p_page);
-        List<User> usersList = users.getContent();
-        userService.setLoggedAccounts(usersList);
 
         model.addAttribute("users", users);
         model.addAttribute("userName", userName);

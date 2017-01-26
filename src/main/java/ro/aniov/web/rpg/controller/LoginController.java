@@ -3,16 +3,16 @@ package ro.aniov.web.rpg.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.web.authentication.session.SessionAuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -38,24 +38,26 @@ public class LoginController {
         return "login";
     }
 
+    /** At logout we remove user from session*/
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
+    public String logout(Authentication authentication) throws ServletException {
 
-            request.getSession().invalidate();
-            List<SessionInformation> userSessions = sessionRegistry.getAllSessions(auth, true);
+        if (authentication != null){
+            Object principal = authentication.getPrincipal();
 
-            for (SessionInformation session: userSessions) {
-                sessionRegistry.removeSessionInformation(session.getSessionId());
+            if (principal instanceof org.springframework.security.core.userdetails.User){
+                List<SessionInformation> userSessions = sessionRegistry.getAllSessions(principal, true);
+
+                for (SessionInformation session: userSessions) {
+                    session.expireNow();
+                    sessionRegistry.removeSessionInformation(session.getSessionId());
+                }
             }
-
-            //new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/login";
     }
 
-    /** Customize error message from login page*/
+    /** Customize error message for login page*/
     private String getErrorMessage(HttpServletRequest request){
         String errorMessage = "";
 
@@ -63,14 +65,16 @@ public class LoginController {
 
         if (exception instanceof BadCredentialsException){
             errorMessage = "Wrong email or password";
-        } else if (exception instanceof LockedException){/***/
+        } else if (exception instanceof LockedException){
             errorMessage = "Account is locked";
-        } else if (exception instanceof DisabledException){ /***/
+        } else if (exception instanceof DisabledException){
             errorMessage = "Account is disabled";
-        } else if (exception instanceof AccountExpiredException){/***/
+        } else if (exception instanceof AccountExpiredException){
             errorMessage = "Account is expired";
         } else if (exception instanceof CredentialsExpiredException){
             errorMessage = "Credentials have expired";
+        } else if (exception instanceof SessionAuthenticationException){
+            errorMessage = "Only 1 session / user available";
         }
         return errorMessage;
     }
