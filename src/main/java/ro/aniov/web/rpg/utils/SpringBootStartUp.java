@@ -41,6 +41,7 @@ public class SpringBootStartUp implements ApplicationListener<ApplicationReadyEv
             User user = new User();
             account.setUser(user);
             accountRepository.save(account);
+            System.out.println("\n#######################\nNew account Created: " + role);
         }
         System.out.println("\n##############\nUser: " + email + " Password: " + password + " ROLE: " + role);
     }

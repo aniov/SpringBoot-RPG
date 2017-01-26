@@ -67,6 +67,9 @@ public class Account {
     @PrimaryKeyJoinColumn
     private User user;
 
+    @Transient
+    private boolean logged = false;
+
     @PrePersist
     protected void onCreate(){
         if (created == null)
@@ -151,4 +154,14 @@ public class Account {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public boolean isLogged() {
+        return logged;
+    }
+
+    public void setLogged(boolean logged) {
+        this.logged = logged;
+    }
+
+
 }

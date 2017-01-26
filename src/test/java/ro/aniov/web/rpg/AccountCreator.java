@@ -1,6 +1,5 @@
 package ro.aniov.web.rpg;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import ro.aniov.web.rpg.model.characters.hero.Hero;
 import ro.aniov.web.rpg.model.characters.hero.HeroType;
 import ro.aniov.web.rpg.service.AccountService;
 import ro.aniov.web.rpg.service.HeroService;
-import ro.aniov.web.rpg.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,20 +33,17 @@ public class AccountCreator {
     private AccountService accountService;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private HeroService heroService;
 
     private final int size = 8;
 
     private final static String base_address= "@mockAddress.com";
 
-    @Ignore
+    //@Ignore
     @Test
     public void createAccountsTest(){
 
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 260; i++){
 
             String email = generateRandomString().append(base_address).toString();
             String password = email;
@@ -56,8 +51,6 @@ public class AccountCreator {
             if (accountService.findAccountByEmail(email) == null){
                     accountDTO =  new AccountDTO(email, password, password);
                     accountService.registerAccount(accountDTO);
-               // System.out.println(accountDTO);
-               // assertNotNull(accountService.findAccountByEmail(email));
             }
         }
     }
@@ -101,7 +94,6 @@ public class AccountCreator {
 
             HeroType heroType = HeroType.values()[random.nextInt(HeroType.values().length)];
             Hero hero = new Hero(generateRandomString().toString(), heroType, user);
-            //user.setHeroes(user.getHeroes().add(hero));
             heroService.saveHero(hero);
             nrOfHeroes--;
         }

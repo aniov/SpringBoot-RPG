@@ -23,7 +23,6 @@ import ro.aniov.web.rpg.service.gamePlay.GamePlay;
 
 import javax.servlet.http.HttpSession;
 
-
 @Controller
 public class GameController {
 
@@ -58,9 +57,6 @@ public class GameController {
 
         gameMap = (GameMap) httpSession.getAttribute("gameMap");
         heroPlayDTO = (HeroPlayDTO) httpSession.getAttribute("heroPlayDTO");
-
-        //Hero hero = heroService.getHeroById(heroIdDTO.getHeroId());
-        //HeroPlayDTO heroPlayDTO = new HeroPlayDTO(hero);
 
         model.addAttribute("gameMap", gameMap);
         model.addAttribute("heroPlayDTO", heroPlayDTO);

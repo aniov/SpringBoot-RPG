@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<div th:fragment="pagination">
+    <ul th:each="i : ${#numbers.sequence(1, users.totalPages)}" class="pagination pagination-sm">
+        <th:block th:if="${i} == 1">
+            <li>
+                <a th:href="@{/search(userName=${userName}, p=${1}, r=${results_p_page})}" th:class="${pageNr} > 1 ? '' : 'btn disabled'">&laquo;</a>
+            </li>
+            <li>
+                <a th:href="@{/search(userName=${userName}, p=${pageNr - 1}, r=${results_p_page})}" th:class="${pageNr} > 1 ? '' : 'btn disabled'">previous</a>
+            </li>
+        </th:block>
+        <li th:class="${i} == ${pageNr} ? active : ''">
+            <a th:text="${i}" th:href="@{/search(userName=${userName}, p=${i}, r=${results_p_page})}" >2</a>
+        </li>
+        <th:block th:if="${i} == ${users.totalPages}">
+            <li>
+                <a th:href="@{/search(userName=${userName}, p=${pageNr + 1}, r=${results_p_page})}"  th:class="${users.totalPages} > ${pageNr} ? '' : 'btn disabled'">next</a>
+            </li>
+            <li>
+                <a th:href="@{/search(userName=${userName}, p=${users.totalPages}, r=${results_p_page})}" th:class="${users.totalPages} > ${pageNr} ? '' : 'btn disabled'">&raquo;</a>
+            </li>
+        </th:block>
+    </ul>
+</div>
+
+<div th:fragment="results_per_page">
+    <div class="btn-group">
+        <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <span th:text="${results_p_page}">10</span>
+            <span class="caret"/>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a th:href="@{/search(userName=${userName}, p=${i}, r=10)}">10</a></li>
+            <li><a th:href="@{/search(userName=${userName}, p=${i}, r=20)}">20</a></li>
+            <li><a th:href="@{/search(userName=${userName}, p=${i}, r=50)}">50</a></li>
+            <li><a th:href="@{/search(userName=${userName}, p=${i}, r=100)}">100</a></li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

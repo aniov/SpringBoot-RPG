@@ -67,7 +67,7 @@ public class DatabaseAuthenticationProvider extends AbstractUserDetailsAuthentic
         if (!valid){
             throw new BadCredentialsException("Invalid Account name / Password for user: " + email);
         }
-        /** Addinng Account role to authorities */
+        /** Adding Account role to authorities */
         final List<GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(account.getRole().getRole());
 
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(email, plainPassword,

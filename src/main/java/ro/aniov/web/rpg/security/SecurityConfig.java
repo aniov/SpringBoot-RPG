@@ -2,6 +2,7 @@ package ro.aniov.web.rpg.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,6 +11,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 
 /**
  * Created by Marius on 12/10/2016.
@@ -29,8 +32,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private DatabaseAuthenticationProvider databaseAuthenticationProvider;
 
     @Autowired
+    private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
+
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(databaseAuthenticationProvider).eraseCredentials(true);
+    }
+    /** Set up SessionRegistry used to access logged accounts*/
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
     }
 
     @Override
@@ -56,11 +67,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
            .formLogin()
                 .loginPage("/login")
-                    .failureUrl("/login?error=true")
-                    .defaultSuccessUrl("/member")
-           .and()
+                    .failureUrl("/login?error=true")//.defaultSuccessUrl("/member")
+                    .successHandler(myAuthenticationSuccessHandler)
+           /** We use Custom 'logout'*/
+           /*.and()
                 .logout()
-                    .logoutSuccessUrl("/login")
+                    .logoutSuccessUrl("/login")*/
            .and()
                 .authorizeRequests()
                     .antMatchers("/login",
@@ -70,6 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
            .and()
                 .authorizeRequests()
                     .antMatchers("/member",
+                                            "/search",
                                             "/profile",
                                             "/delete_hero/*",
                                             "/edit_heroname",
@@ -82,7 +95,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/admin")
                         .hasRole("ADMIN")
            .anyRequest()
-                .denyAll();
+                .denyAll()
+                /** Configure so we have 1 session used in SessionRegistry*/
+           .and()
+                .sessionManagement()
+                    .maximumSessions(1)
+                    .maxSessionsPreventsLogin(true)
+                    .sessionRegistry(sessionRegistry());
 
         // @formatter:on
 
