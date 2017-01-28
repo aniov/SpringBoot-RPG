@@ -151,3 +151,50 @@ function deleteAccount(id) {
         });
     });
 }
+
+function changeRole(id) {
+
+    swal({
+        title: 'Are you sure?',
+        text: 'Change Role',
+        type: 'warning',
+        input: 'select',
+        inputOptions: {
+            'ROLE_USER' : 'User',
+            'ROLE_ADMIN' : 'Admin',
+            'ROLE_TRIAL' : 'Trial'
+        },
+        inputPlaceholder: 'Select Role',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, I am sure!',
+        cancelButtonText: 'No, cancel it!',
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        inputValidator: function(roleType) {
+            return new Promise(function(resolve){
+                resolve();
+                $.ajax({
+                    url: '/change_account_role',
+                    data: {id: id, role: roleType},
+                    type: 'PUT',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="_csrf"]').attr('content'))
+                    },
+                    success: function () {
+                        swal({
+                            title: 'Account Role changed',
+                            type: 'success',
+                            confirmButtonClass: 'btn btn-info',
+                            allowOutsideClick: false
+                        }).then(function () {
+                            window.location.reload();
+                        })
+                    },
+                    error: function () {
+                        sweetAlert('Oops...', 'Something went wrong!', 'error');
+                    }
+                })
+            })
+        }
+    });
+}

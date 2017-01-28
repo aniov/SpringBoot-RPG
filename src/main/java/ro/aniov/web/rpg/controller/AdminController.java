@@ -6,10 +6,7 @@ import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import ro.aniov.web.rpg.service.AccountService;
 
 /**
@@ -60,6 +57,18 @@ public class AdminController {
         try {
             accountService.deleteAccount(id);
         } catch (PermissionDeniedDataAccessException | DataIntegrityViolationException e){
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/change_account_role")
+    @ResponseBody
+    public ResponseEntity roleAccount(@RequestParam("id") Long id, @RequestParam("role") String role){
+
+        try {
+            accountService.roleChange(id, role);
+        } catch (PermissionDeniedDataAccessException e){
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity(HttpStatus.OK);

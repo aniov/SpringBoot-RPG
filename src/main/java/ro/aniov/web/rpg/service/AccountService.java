@@ -77,7 +77,16 @@ public class AccountService {
         if (account.getId() == user.getAccount().getId()){
             throw new DataIntegrityViolationException("Not allowed delete your own account");
         }
-
         accountRepository.delete(account);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void roleChange(Long id, String role) throws PermissionDeniedDataAccessException{
+
+        Role roleType = Role.valueOf(role);
+        Account account = accountRepository.findById(id);
+        if (roleType != null && account != null) {
+            accountRepository.changeRole(id, roleType);
+        }
     }
 }

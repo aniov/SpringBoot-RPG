@@ -38,4 +38,8 @@ public interface AccountRepository extends JpaRepository<Account, Long>{
     @Modifying
     @Query("UPDATE Account ac SET ac.accountNonLocked = :setAcc WHERE ac.id = :id")
     void setLock(@Param("id") Long id, @Param("setAcc") boolean setAcc);
+
+    @Modifying
+    @Query("UPDATE Account ac SET ac.role = :roleType WHERE ac.id = :id")
+    void changeRole(@Param("id") Long id, @Param("roleType") Role roleType);
 }

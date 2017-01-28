@@ -96,7 +96,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                             "/disable_account/*",
                                             "/expire_account/*",
                                             "/lock_account/*",
-                                            "/delete_account/*")
+                                            "/delete_account/*",
+                                            "/change_account_role")
                         .hasRole("ADMIN")
            .anyRequest()
                 .denyAll()
