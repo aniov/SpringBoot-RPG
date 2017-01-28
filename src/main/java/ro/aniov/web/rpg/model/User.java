@@ -42,10 +42,14 @@ public class User {
     public enum sexType {
         MALE("MALE"), FEMALE("FEMALE"), UNKNOWN("UNKNOWN");
 
-        private String sex;
+        private String type;
 
         sexType(String sex) {
-            this.sex = sex;
+            this.type = sex;
+        }
+
+        public String getType() {
+            return type;
         }
     }
 
