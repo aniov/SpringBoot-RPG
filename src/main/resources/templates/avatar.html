@@ -6,13 +6,13 @@
 </head>
 <body>
     <div th:fragment="avatar-fragment">
-        <div th:if="${user.sex} == 'MALE'">
+        <div th:if="${user.sex.name} == 'MALE'">
             <img src="../static/png/avatar-male.png" th:src="@{/png/avatar-male.png}"/>
         </div>
-        <div th:if="${user.sex} == 'FEMALE'">
+        <div th:if="${user.sex.name} == 'FEMALE'">
             <img src="../static/png/avatar-female.png" th:src="@{/png/avatar-female.png}"/>
         </div>
-        <div th:if="${user.sex} == 'UNKNOWN'">
+        <div th:if="${user.sex.name} == 'UNKNOWN'">
             <img src="../static/png/avatar-unknown.png" th:src="@{/png/avatar-unknown.png}"/>
         </div>
         <br/>
