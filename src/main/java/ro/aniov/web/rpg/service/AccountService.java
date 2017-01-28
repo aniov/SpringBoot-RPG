@@ -1,6 +1,9 @@
 package ro.aniov.web.rpg.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.PermissionDeniedDataAccessException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ro.aniov.web.rpg.dto.AccountDTO;
@@ -38,7 +41,6 @@ public class AccountService {
         User user = new User();
         account.setUser(user);
         accountRepository.save(account);
-
     }
 
     /** @PreAuthorize("isAuthenticated()") */
@@ -48,5 +50,34 @@ public class AccountService {
 
     public List<Account> findAccountByEmailContaining(String email_part) {
         return accountRepository.findByEmailContaining(email_part);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void setEnableAccount(Long id) throws PermissionDeniedDataAccessException{
+        Account account = accountRepository.findById(id);
+        accountRepository.setEnabled(id, !account.isEnabled());
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void setExipredAccount(Long id) throws PermissionDeniedDataAccessException{
+        Account account = accountRepository.findById(id);
+        accountRepository.setExpired(id, !account.isAccountNonExpired());
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void setLockAccount(Long id) throws PermissionDeniedDataAccessException{
+        Account account = accountRepository.findById(id);
+        accountRepository.setLock(id, !account.isAccountNonLocked());
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void deleteAccount(Long id) throws PermissionDeniedDataAccessException{
+        Account account = accountRepository.findById(id);
+        User user = userService.getUserFromContext();
+        if (account.getId() == user.getAccount().getId()){
+            throw new DataIntegrityViolationException("Not allowed delete your own account");
+        }
+
+        accountRepository.delete(account);
     }
 }

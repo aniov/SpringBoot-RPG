@@ -57,7 +57,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                         "/fonts/*"
                             );
         // @formatter:on
-
     }
 
     @Override
@@ -93,7 +92,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                             "/ini_game",
                                             "/logout")
                     .authenticated()
-                    .antMatchers("/admin")
+                    .antMatchers("/admin",
+                                            "/disable_account/*",
+                                            "/expire_account/*",
+                                            "/lock_account/*",
+                                            "/delete_account/*")
                         .hasRole("ADMIN")
            .anyRequest()
                 .denyAll()
@@ -105,7 +108,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .sessionRegistry(sessionRegistry());
 
         // @formatter:on
-
     }
 
 }

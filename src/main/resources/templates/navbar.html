@@ -22,7 +22,7 @@
                     <li class="active"><a href="http://www.google.com">
                         <img src="../static/png/google_icon.png" th:src="@{/png/google_icon.png}"/><span class="sr-only">(current)</span></a>
                     </li>
-                    <div class="nav navbar-nav navbar-left" sec:authorize="hasRole('ROLE_USER')">
+                    <div class="nav navbar-nav navbar-left">
                         <li><a th:href="@{/member}">Member</a></li>
                     </div>
                     <div class="nav navbar-nav navbar-left" sec:authorize="hasRole('ROLE_ADMIN')">
@@ -39,7 +39,7 @@
                     <div class="form-group">
                         <input th:name="userName" type="text" class="form-control" placeholder="Search users"/>
                     </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <button type="submit" class="btn btn-default">Search</button>
                 </form>
                 <div class="nav navbar-nav navbar-right" sec:authorize="isAuthenticated()">
                     <li><a th:href="@{/logout}" >Logout</a></li>

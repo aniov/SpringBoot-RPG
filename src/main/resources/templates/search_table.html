@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-
+    <meta charset="UTF-8"/>
 </head>
 <body>
 <div th:fragment="admin_search_results">
@@ -13,9 +13,12 @@
             <th>email</th>
             <th>First name</th>
             <th>Last name</th>
+            <th>Avatar</th>
             <th>role</th>
+            <th></th>
             <th>created</th>
             <th>OnLine</th>
+            <th></th>
             <th></th>
             <th></th>
             <th></th>
@@ -29,7 +32,15 @@
             <td th:text="${user.account.email}">test@test.com</td>
             <td th:text="${user.firstName}">John</td>
             <td th:text="${user.lastName}">Marvin</td>
+            <td id="avatar-pic-small">
+                <div th:replace="avatar :: avatar-fragment"/>
+            </td>
             <td th:text="${user.account.role}">ROLE_USER</td>
+            <td>
+                <button th:onclick="'changeRole(\'' + ${user.id} + '\');'" class="btn btn-success btn-xs">Change
+                </button>
+            </td>
+
             <td th:text="${#calendars.format(user.account.created, 'dd MMM yyyy HH:mm')}"></td>
             <td>
                 <a th:if="${user.account.logged}">
@@ -40,10 +51,39 @@
                 </a>
             </td>
             <td>
-                <button th:onclick="'suspendAccount(' + ${user.id}+ ');'" class="btn btn-warning">Suspend</button>
+                <div th:if="${user.account.logged}">
+                    <button th:onclick="'logoutAccount(' + ${user.id}+ ');'" class="btn btn-info btn-sm">logout</button>
+                </div>
+                <div th:unless="${user.account.logged}">
+                    <button class="btn btn-primary disabled btn-sm">logout</button>
+                </div>
             </td>
             <td>
-                <button th:onclick="'deleteAccount(' + ${user.id}+ ');'" class="btn btn-danger">Delete</button>
+                <div th:if="${user.account.enabled}">
+                    <button th:onclick="'disableAccount(' + ${user.id}+ ');'" class="btn btn-info btn-sm">Disable</button>
+                </div>
+                <div th:unless="${user.account.enabled}">
+                    <button th:onclick="'disableAccount(' + ${user.id}+ ');'" class="btn btn-warning btn-sm">Enable</button>
+                </div>
+            </td>
+            <td>
+                <div th:if="${user.account.accountNonExpired}">
+                    <button th:onclick="'expireAccount(' + ${user.id}+ ');'" class="btn btn-info btn-sm">Expire</button>
+                </div>
+                <div th:unless="${user.account.accountNonExpired}">
+                    <button th:onclick="'expireAccount(' + ${user.id}+ ');'" class="btn btn-warning btn-sm">Expired</button>
+                </div>
+            </td>
+            <td>
+                <div th:if="${user.account.accountNonLocked}">
+                    <button th:onclick="'lockAccount(' + ${user.id}+ ');'" class="btn btn-info btn-sm">Lock</button>
+                </div>
+                <div th:unless="${user.account.accountNonLocked}">
+                    <button th:onclick="'lockAccount(' + ${user.id}+ ');'" class="btn btn-warning btn-sm">UnLock</button>
+                </div>
+            </td>
+            <td>
+                <button th:onclick="'deleteAccount(' + ${user.id}+ ');'" class="btn btn-danger btn-sm">Delete</button>
             </td>
         </tr>
         </tbody>
@@ -57,6 +97,7 @@
             <th>#</th>
             <th>First name</th>
             <th>Last name</th>
+            <th>Avatar</th>
         </tr>
         </thead>
         <tbody>
@@ -64,9 +105,13 @@
             <td th:text="${results_p_page} * (${pageNr} - 1) + ${iterationStat.index} + 1">1</td>
             <td th:text="${user.firstName}"></td>
             <td th:text="${user.lastName}"></td>
+            <td id="avatar-pic-medium">
+                <div th:replace="avatar :: avatar-fragment"/>
+            </td>
         </tr>
         </tbody>
     </table>
 </div>
+
 </body>
 </html>
