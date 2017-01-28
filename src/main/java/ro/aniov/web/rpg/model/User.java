@@ -3,6 +3,7 @@ package ro.aniov.web.rpg.model;
 import ro.aniov.web.rpg.model.characters.hero.Hero;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class User {
     @Column(name = "lastname")
     private String lastName = "not set";
 
+    @NotNull
     @Column(name = "sex")
     @Enumerated(EnumType.STRING)
     private sexType sex = sexType.UNKNOWN;
@@ -42,14 +44,18 @@ public class User {
     public enum sexType {
         MALE("MALE"), FEMALE("FEMALE"), UNKNOWN("UNKNOWN");
 
-        private String type;
+        private String name;
 
-        sexType(String sex) {
-            this.type = sex;
+        sexType(String name) {
+            this.name = name;
         }
 
-        public String getType() {
-            return type;
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
         }
     }
 
@@ -116,6 +122,7 @@ public class User {
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
+        if (sex != user.sex) return false;
         if (account != null ? !account.equals(user.account) : user.account != null) return false;
         return heroes != null ? heroes.equals(user.heroes) : user.heroes == null;
     }
@@ -125,6 +132,7 @@ public class User {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (sex != null ? sex.hashCode() : 0);
         result = 31 * result + (account != null ? account.hashCode() : 0);
         result = 31 * result + (heroes != null ? heroes.hashCode() : 0);
         return result;
