@@ -9,13 +9,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ro.aniov.web.rpg.dto.HeroDTO;
+import ro.aniov.web.rpg.dto.validators.NameIsValid;
 import ro.aniov.web.rpg.service.HeroService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Size;
 
 @Controller
+@Validated /** We use @RequestParam validators*/
 public class HeroController {
 
     @Autowired
@@ -50,15 +54,14 @@ public class HeroController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PutMapping(value = "/edit_heroname")
+    @PostMapping(value = "/edit_heroname")
     @ResponseBody
     public ResponseEntity editHeroName(@RequestParam(value = "id", required = true) Long id,
-                                        @RequestParam(value = "name", required = true) String name) {
+                                       @Size(min = 3, max = 30) @NameIsValid @RequestParam(value = "name", required = true) String name) {
+
         try {
             heroService.editName(id, name);
-
         } catch (Exception e) {
-            System.out.println(e.toString());
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(HttpStatus.OK);

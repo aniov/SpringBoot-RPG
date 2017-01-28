@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+<div th:fragment="admin_search_results">
+    <table class="table table-striped table-hover ">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Id</th>
+            <th>email</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>role</th>
+            <th>created</th>
+            <th>OnLine</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user, iterationStat : ${users}">
+            <td th:text="${results_p_page} * (${pageNr} - 1) + ${iterationStat.index} + 1">1</td>
+            <td th:text="${user.account.id}">23</td>
+            <td th:text="${user.account.email}">test@test.com</td>
+            <td th:text="${user.firstName}">John</td>
+            <td th:text="${user.lastName}">Marvin</td>
+            <td th:text="${user.account.role}">ROLE_USER</td>
+            <td th:text="${#calendars.format(user.account.created, 'dd MMM yyyy HH:mm')}"></td>
+            <td>
+                <a th:if="${user.account.logged}">
+                    <span class="label label-success"> </span>
+                </a>
+                <a th:unless="${user.account.logged}">
+                    <span class="label label-danger"> </span>
+                </a>
+            </td>
+            <td>
+                <button th:onclick="'suspendAccount(' + ${user.id}+ ');'" class="btn btn-warning">Suspend</button>
+            </td>
+            <td>
+                <button th:onclick="'deleteAccount(' + ${user.id}+ ');'" class="btn btn-danger">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:fragment="user_search_results">
+    <table class="table table-striped table-hover ">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>First name</th>
+            <th>Last name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user, iterationStat : ${users}">
+            <td th:text="${results_p_page} * (${pageNr} - 1) + ${iterationStat.index} + 1">1</td>
+            <td th:text="${user.firstName}"></td>
+            <td th:text="${user.lastName}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

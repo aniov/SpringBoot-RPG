@@ -29,18 +29,33 @@ public class User {
     @Column(name = "lastname")
     private String lastName = "not set";
 
+    @Column(name = "sex")
+    @Enumerated(EnumType.STRING)
+    private sexType sex = sexType.UNKNOWN;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Account account;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Hero> heroes;
 
+    public enum sexType {
+        MALE("MALE"), FEMALE("FEMALE"), UNKNOWN("UNKNOWN");
+
+        private String sex;
+
+        sexType(String sex) {
+            this.sex = sex;
+        }
+    }
+
     public User() {
     }
 
-    public User(String firstName, String lastName) {
+    public User(String firstName, String lastName, sexType sex) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.sex = sex;
     }
 
     public Long getId() {
@@ -77,6 +92,14 @@ public class User {
 
     public void setHeroes(List<Hero> heroes) {
         this.heroes = heroes;
+    }
+
+    public sexType getSex() {
+        return sex;
+    }
+
+    public void setSex(sexType sex) {
+        this.sex = sex;
     }
 
     @Override

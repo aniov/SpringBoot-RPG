@@ -40,7 +40,7 @@ public class LoginController {
 
     /** At logout we remove user from session*/
     @GetMapping("/logout")
-    public String logout(Authentication authentication) throws ServletException {
+    public String logout(HttpServletRequest request, Authentication authentication) throws ServletException {
 
         if (authentication != null){
             Object principal = authentication.getPrincipal();
@@ -53,6 +53,8 @@ public class LoginController {
                     sessionRegistry.removeSessionInformation(session.getSessionId());
                 }
             }
+            request.logout();
+            request.getSession().invalidate();
         }
         return "redirect:/login";
     }

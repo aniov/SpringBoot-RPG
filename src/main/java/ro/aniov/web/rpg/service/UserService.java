@@ -88,4 +88,19 @@ public class UserService {
             }
         }
     }
+
+    @PreAuthorize("isFullyAuthenticated()")
+    public void editProfile(Long id, String firstName, String lastName, String sex)  {
+
+        User user = userRepository.findById(id);
+
+        if (getUserFromContext().equals(user)) {
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setSex(User.sexType.valueOf(sex));
+
+            userRepository.saveAndFlush(user);
+        }
+        else throw new AccessDeniedException("Access Denied");
+    }
 }

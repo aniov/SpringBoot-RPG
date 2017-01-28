@@ -13,6 +13,7 @@ import ro.aniov.web.rpg.model.characters.hero.HeroType;
 import ro.aniov.web.rpg.service.AccountService;
 import ro.aniov.web.rpg.service.HeroService;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -24,7 +25,7 @@ import static org.junit.Assert.assertNotNull;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-//@Transactional
+@Transactional
 public class AccountCreator {
 
     private AccountDTO accountDTO;

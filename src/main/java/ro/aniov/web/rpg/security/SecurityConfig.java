@@ -84,6 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/member",
                                             "/search",
                                             "/profile",
+                                            "/profile/edit",
                                             "/delete_hero/*",
                                             "/edit_heroname",
                                             "/game_play",
