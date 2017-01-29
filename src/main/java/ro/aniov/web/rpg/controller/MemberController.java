@@ -1,7 +1,6 @@
 package ro.aniov.web.rpg.controller;
 
 
-import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -72,7 +71,7 @@ public class MemberController {
 
     @PutMapping(value = "/profile/edit")
     @ResponseBody
-    public ResponseEntity<HttpResponse> editProfile(@RequestParam(name = "id") Long id,
+    public ResponseEntity editProfile(@RequestParam(name = "id") Long id,
                                                     @Size @NameIsValid @RequestParam(name = "firstName", defaultValue = "Unset") String firstName,
                                                     @Size @NameIsValid @RequestParam(name = "lastName", defaultValue = "Unset") String lastName,
                                                     @RequestParam(name = "sex", defaultValue = "UNKNOWN") String sex){
