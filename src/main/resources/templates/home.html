@@ -4,10 +4,20 @@
     <meta charset="UTF-8"/>
     <title>Home Page</title>
     <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
-    <script type="text/javascript" src="../static/js/jquery-3.1.1.min.js" th:src="@{/js/jquery-3.1.1.min.js}" rel="stylesheet"></script>
-    <script type="text/javascript" src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}" rel="stylesheet"></script>
+    <script type="text/javascript" src="../static/js/jquery-3.1.1.min.js" th:src="@{/js/jquery-3.1.1.min.js}"
+            rel="stylesheet"></script>
+    <script type="text/javascript" src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"
+            rel="stylesheet"></script>
 </head>
 <body>
 <div th:replace="navbar :: navigationbar"/>
+
+<div class="container">
+    <div class="col-lg-12">
+        <div style="text-align: center; color: #2596b8">
+            <h2><a href="/login" th:href="@{/login}">Login</a> / <a href="/register" th:href="@{/register}">Sign Up</a></h2>
+        </div>
+    </div>
+</div>
 </body>
 </html>

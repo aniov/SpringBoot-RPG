@@ -21,6 +21,7 @@ import java.util.Random;
 /**
  * Pre Run Initial check if the DB has no ROLE_ADMIN || ROLE_USER
  * And creates one with given credentials
+ * Populate DB with 250 accounts
  */
 
 @Component
