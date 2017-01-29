@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.session.SessionRegistry;
@@ -90,10 +91,9 @@ public class UserService {
     }
 
     @PreAuthorize("isFullyAuthenticated()")
-    public void editProfile(Long id, String firstName, String lastName, String sex)  {
+    public void editProfile(Long id, String firstName, String lastName, String sex) throws AuthenticationCredentialsNotFoundException {
 
         User user = userRepository.findById(id);
-
         if (getUserFromContext().equals(user)) {
             user.setFirstName(firstName);
             user.setLastName(lastName);

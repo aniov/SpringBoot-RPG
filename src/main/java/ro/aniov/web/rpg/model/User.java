@@ -24,11 +24,11 @@ public class User {
 
     @Column(name = "firstname")
     @Size(min = 3, max = 30)
-    private String firstName = "not set";
+    private String firstName = "Unset";
 
     @Size(min = 3, max = 30)
     @Column(name = "lastname")
-    private String lastName = "not set";
+    private String lastName = "Unset";
 
     @NotNull
     @Column(name = "sex")

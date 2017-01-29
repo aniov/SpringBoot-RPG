@@ -43,6 +43,10 @@ public class AccountService {
         accountRepository.save(account);
     }
 
+    public Long findHowMany(){
+        return accountRepository.count();
+    }
+
     /** @PreAuthorize("isAuthenticated()") */
     public Account findAccountByEmail(String email){
         return accountRepository.findByEmail(email);

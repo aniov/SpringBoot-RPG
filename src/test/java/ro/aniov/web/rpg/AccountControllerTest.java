@@ -18,6 +18,7 @@ import javax.transaction.Transactional;
 
 import static org.junit.Assert.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -44,7 +45,10 @@ public class AccountControllerTest {
 
     @Before
     public void setup(){
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        mockMvc = MockMvcBuilders
+                                .webAppContextSetup(webApplicationContext)
+                                .apply(springSecurity())
+                                .build();
     }
 
     @Test
