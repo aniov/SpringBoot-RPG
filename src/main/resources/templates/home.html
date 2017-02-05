@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Home Page</title>
+    <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet"/>
     <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
     <script type="text/javascript" src="../static/js/jquery-3.1.1.min.js" th:src="@{/js/jquery-3.1.1.min.js}"
             rel="stylesheet"></script>
@@ -14,14 +15,19 @@
 
 <div class="container">
     <div class="col-lg-12">
-        <div style="text-align: center; color: #2596b8">
+        <div class="home-page-text">
             <div sec:authorize="isAuthenticated()">
                 <h2><a href="/logout" th:href="@{/logout}">Logout</a></h2>
             </div>
             <div sec:authorize="!isAuthenticated()">
                 <h2><a href="/login" th:href="@{/login}">Login</a> / <a href="/register" th:href="@{/register}">Sign
                     Up</a></h2>
-            </div>
+                <a>Or</a>
+            </div><br/>
+        </div>
+        <div class="home-page-text">
+            <div>Sign in with USER role: <span>q@q.com</span> with password: <span>11111</span></div>
+            <div>Sign in with ADMIN role: <span>admin@admin.com</span> with password: <span>11111</span></div>
         </div>
     </div>
 </div>

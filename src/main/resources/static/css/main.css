@@ -87,3 +87,12 @@
     height: 50px;
     width: 50px;
 }
+
+.home-page-text {
+    text-align: center;
+    color: #3fc3ee;
+}
+
+.home-page-text > div > span{
+    color: #34e721;
+}
