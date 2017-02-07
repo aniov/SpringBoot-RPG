@@ -6,25 +6,25 @@
 </head>
 <body>
 
-<div th:fragment="pagination">
-    <ul th:each="i : ${#numbers.sequence(1, users.totalPages)}" class="pagination pagination-sm">
-        <th:block th:if="${i} == 1">
+<div th:fragment="pagination" th:with="blockNumber=${T(Math).ceil(pageNr * 0.2)}, blockSize=5, totalBlocks=${users.totalPages / blockSize}"> <!--Block Size = 5; 1/5 = 0.2-->
+    <ul th:each="i : ${#numbers.sequence(blockNumber * blockSize - (blockSize - 1), blockNumber * blockSize)}" class="pagination pagination-sm">
+        <th:block th:if="${i} == ${blockNumber * blockSize - (blockSize - 1)}">
             <li>
-                <a th:href="@{/search(userName=${userName}, p=${1}, r=${results_p_page})}" th:class="${pageNr} > 1 ? '' : 'btn disabled'">&laquo;</a>
+                <a th:href="@{/search(userName=${userName}, p=${1}, r=${results_p_page})}" th:class="${blockNumber} > 1 ? '' : 'btn disabled'">&laquo;</a>
             </li>
             <li>
-                <a th:href="@{/search(userName=${userName}, p=${pageNr - 1}, r=${results_p_page})}" th:class="${pageNr} > 1 ? '' : 'btn disabled'">previous</a>
+                <a th:href="@{/search(userName=${userName}, p=${T(Math).round((blockNumber - 1)*blockSize -(blockSize - 1))}, r=${results_p_page})}" th:class="${blockNumber} > 1 ? '' : 'btn disabled'">previous</a>
             </li>
         </th:block>
         <li th:class="${i} == ${pageNr} ? active : ''">
             <a th:text="${i}" th:href="@{/search(userName=${userName}, p=${i}, r=${results_p_page})}" >2</a>
         </li>
-        <th:block th:if="${i} == ${users.totalPages}">
+        <th:block th:if="${i} == ${blockNumber * blockSize}">
             <li>
-                <a th:href="@{/search(userName=${userName}, p=${pageNr + 1}, r=${results_p_page})}"  th:class="${users.totalPages} > ${pageNr} ? '' : 'btn disabled'">next</a>
+                <a th:href="@{/search(userName=${userName}, p=${T(Math).round(blockNumber*blockSize + 1)}, r=${results_p_page})}"  th:class="${totalBlocks} > ${blockNumber} ? '' : 'btn disabled'">next</a>
             </li>
             <li>
-                <a th:href="@{/search(userName=${userName}, p=${users.totalPages}, r=${results_p_page})}" th:class="${users.totalPages} > ${pageNr} ? '' : 'btn disabled'">&raquo;</a>
+                <a th:href="@{/search(userName=${userName}, p=${users.totalPages}, r=${results_p_page})}" th:class="${totalBlocks} > ${blockNumber} ? '' : 'btn disabled'">&raquo;</a>
             </li>
         </th:block>
     </ul>
